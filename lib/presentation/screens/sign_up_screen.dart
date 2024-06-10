@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindchain_exchange/presentation/controllers/sign_up_controller.dart';
+import 'package:mindchain_exchange/presentation/screens/sign_in_screen.dart';
 import 'package:mindchain_exchange/presentation/utility/app_colors.dart';
 import 'package:mindchain_exchange/presentation/widgets/costom_dialoge.dart';
 import 'package:mindchain_exchange/presentation/widgets/costom_password_field.dart';
@@ -214,16 +215,19 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   Widget _buildSignInText() {
-    return const Row(
+    return  Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           'Already Registered?',
           style: TextStyle(color: Colors.white),
         ),
-        Text(
-          '  Sign In',
-          style: TextStyle(color: AppColor.themeColor),
+        GestureDetector(
+          onTap: () => Get.offAll(const SignInScreen()),
+          child: const Text(
+            '  Sign In',
+            style: TextStyle(color: AppColor.themeColor),
+          ),
         ),
       ],
     );
