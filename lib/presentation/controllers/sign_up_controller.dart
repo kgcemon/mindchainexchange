@@ -1,20 +1,20 @@
+import 'dart:async';
 import 'dart:convert';
-
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:mindchain_exchange/data/network_caller.dart';
 import 'package:mindchain_exchange/data/utility/urls.dart';
 
 class SignUpController extends GetxController {
   bool _inProgress = false;
   String _errorMessage = '';
+  final RxString _sendButtonText = ''.obs;
 
   bool get inProgress => _inProgress;
-
   String get errorMessage => _errorMessage;
+  RxString get sendButtonText => _sendButtonText;
 
-  Future<bool> registerUser(
-      String username, String email, String otp, String password) async {
-    print(username);
+  Future<bool> registerUser(String username, String email, String otp, String password) async {
     Map<String, dynamic> body = {
       "username": username,
       "email": email,
@@ -22,10 +22,8 @@ class SignUpController extends GetxController {
       "password": password,
     };
     try {
-      var response =
-          await NetworkCaller.postRequest(url: Urls.signUpUrls, body: body);
+      var response = await NetworkCaller.postRequest(url: Urls.signUpUrls, body: body);
       if (response.responseCode == 200) {
-        print(response.responseData);
         _errorMessage = response.responseData['data'];
         _inProgress = false;
         return true;
@@ -40,17 +38,34 @@ class SignUpController extends GetxController {
     }
   }
 
-  Future<bool> sendEmail(String email) async {
-    print(email);
+  Future<String> sendEmail(String email) async {
+    _getSendCodeAgain();
     var response = await NetworkCaller.postRequest(
-        url: Urls.emailCodeUrl, body: jsonEncode({"email": email}));
+        url: Urls.emailCodeUrl,
+        body: jsonEncode({"email": email})
+    );
     if (response.responseData['status'] == 1) {
       update();
-      return true;
+      return response.responseData['data'];
     } else {
       _errorMessage = response.responseData['data'];
       update();
-      return false;
+      return response.responseData['data'];
     }
+  }
+
+  void _getSendCodeAgain() {
+    int num = 10;
+    int nextTime = num;
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      num -= 1;
+      _sendButtonText.value = 'Wait $num';
+      if (num == 0) {
+        _sendButtonText.value = '';
+        print(num);
+        timer.cancel();
+      }
+    });
+    num += num+nextTime;
   }
 }

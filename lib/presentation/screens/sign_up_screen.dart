@@ -12,10 +12,10 @@ class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  SignUpScreenState createState() => SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen>
+class SignUpScreenState extends State<SignUpScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -30,7 +30,6 @@ class _SignUpScreenState extends State<SignUpScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
@@ -44,34 +43,38 @@ class _SignUpScreenState extends State<SignUpScreen>
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: FadeTransition(
-                opacity: _animation,
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildHeader(constraints, 'Create Account'),
-                      const SizedBox(height: 32),
-                      buildInstructionText(
-                          'Enter Your Name, E-mail And Password'),
-                      const SizedBox(height: 16),
-                      _buildTextField(usernameController, 'User name'),
-                      const SizedBox(height: 16),
-                      _buildTextField(emailController, "Your E-mail"),
-                      const SizedBox(height: 16),
-                      _buildOtpField(emailCodesController),
-                      const SizedBox(height: 16),
-                      buildPasswordField(
-                          passwordController, 'Enter Your Password', _formKey),
-                      const SizedBox(height: 32),
-                      _buildSignUpButton(Get.width),
-                      const SizedBox(height: 16),
-                      _buildSignInText(),
-                    ],
-                  ),
+            child: FadeTransition(
+              opacity: _animation,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildHeader(constraints, 'Create Account'),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 32),
+                          buildInstructionText(
+                              'Enter Your Name, E-mail And Password'),
+                          const SizedBox(height: 16),
+                          _buildTextField(usernameController, 'User name'),
+                          const SizedBox(height: 16),
+                          _buildTextField(emailController, "Your E-mail"),
+                          const SizedBox(height: 16),
+                          _buildOtpField(emailCodesController),
+                          const SizedBox(height: 16),
+                          buildPasswordField(passwordController,
+                              'Enter Your Password', _formKey),
+                          const SizedBox(height: 32),
+                          _buildSignUpButton(Get.width),
+                          const SizedBox(height: 16),
+                          _buildSignInText(),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -157,24 +160,49 @@ class _SignUpScreenState extends State<SignUpScreen>
           ),
           Expanded(
             flex: 3,
-            child: InkWell(
-              onTap: () =>
-                  signUpController.sendEmail(emailController.text),
-              child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                  ),
-                  color: AppColor.themeColor,
-                ),
-                child: const Text(
-                  "Send OTP",
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
+            child: Obx(
+              () => signUpController.sendButtonText.isEmpty
+                  ? InkWell(
+                      onTap: () {
+                        signUpController.sendEmail(emailController.text).then(
+                          (value) {
+                            if (value.isNotEmpty) {
+                              Get.snackbar("Result", value);
+                            }
+                          },
+                        );
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(20),
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                          ),
+                          color: AppColor.themeColor,
+                        ),
+                        child: const Text(
+                          "Send OTP",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        color: Colors.grey,
+                      ),
+                      child: Text(
+                        signUpController.sendButtonText.value,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ),
             ),
           ),
         ],
@@ -215,7 +243,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   Widget _buildSignInText() {
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(

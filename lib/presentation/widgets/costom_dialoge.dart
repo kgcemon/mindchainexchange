@@ -9,9 +9,9 @@ customDialog() async {
     title: "",
     titlePadding: const EdgeInsets.all(0),
     titleStyle: const TextStyle(fontSize: 13),
-    content: const SizedBox(
-      height: 32,
-      child: Row(
+    content:  SizedBox(
+      height: Get.height*0.08,
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(

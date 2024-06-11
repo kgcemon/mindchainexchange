@@ -36,12 +36,13 @@ class MindChain extends StatelessWidget {
               ),
             ),
           ),
-          scaffoldBackgroundColor: const Color(0xff0F0F0F),
+          scaffoldBackgroundColor: const Color(0xff292929),
           colorSchemeSeed: AppColor.themeColor),
     );
   }
-  _borderStyle()=>  OutlineInputBorder(
-    borderRadius: BorderRadius.circular(15),
-    borderSide: const BorderSide(color: Colors.white),
-  );
+
+  _borderStyle() => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: Colors.white),
+      );
 }
