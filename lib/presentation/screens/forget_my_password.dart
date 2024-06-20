@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mindchain_exchange/presentation/controllers/forgot_my_password_controller.dart';
 import 'package:mindchain_exchange/presentation/controllers/sign_up_controller.dart';
-import 'package:mindchain_exchange/presentation/screens/sign_in_screen.dart';
 import 'package:mindchain_exchange/presentation/utility/app_colors.dart';
 import 'package:mindchain_exchange/presentation/widgets/costom_dialoge.dart';
 import 'package:mindchain_exchange/presentation/widgets/costom_password_field.dart';
-import 'package:mindchain_exchange/presentation/widgets/instruction_text.dart';
 import 'package:mindchain_exchange/presentation/widgets/login_signup_header.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class ForgotMyPassword extends StatefulWidget {
+  const ForgotMyPassword({super.key});
 
   @override
-  SignUpScreenState createState() => SignUpScreenState();
+  ForgotMyPasswordState createState() => ForgotMyPasswordState();
 }
 
-class SignUpScreenState extends State<SignUpScreen>
+class ForgotMyPasswordState extends State<ForgotMyPassword>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
-  final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController emailCodesController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  var signUpController = Get.find<SignUpController>();
+  var forgotMyPasswordController = Get.find<ForgotMyPasswordController>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,27 +48,21 @@ class SignUpScreenState extends State<SignUpScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildHeader(constraints, 'Create Account'),
+                    buildHeader(constraints, ''),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
                         children: [
                           const SizedBox(height: 32),
-                          buildInstructionText(
-                              'Enter Your Name, E-mail And Password'),
-                          const SizedBox(height: 16),
-                          _buildTextField(usernameController, 'User name'),
-                          const SizedBox(height: 16),
                           _buildTextField(emailController, "Your E-mail"),
                           const SizedBox(height: 16),
                           _buildOtpField(emailCodesController),
                           const SizedBox(height: 16),
                           buildPasswordField(passwordController,
-                              'Enter Your Password', _formKey),
+                              'Enter Your New Password', _formKey),
                           const SizedBox(height: 32),
                           _buildSignUpButton(Get.width),
                           const SizedBox(height: 16),
-                          _buildSignInText(),
                         ],
                       ),
                     )
@@ -101,7 +93,6 @@ class SignUpScreenState extends State<SignUpScreen>
   @override
   void dispose() {
     _animationController.dispose();
-    usernameController.dispose();
     emailController.dispose();
     emailCodesController.dispose();
     passwordController.dispose();
@@ -161,25 +152,19 @@ class SignUpScreenState extends State<SignUpScreen>
           Expanded(
             flex: 3,
             child: Obx(
-              () => signUpController.sendButtonText.isEmpty
+              () => forgotMyPasswordController.sendButtonText.isEmpty
                   ? InkWell(
                       onTap: () {
-                        if (emailController.text.contains("@") &&
-                            emailController.text.length > 5) {
-                          signUpController.sendEmail(emailController.text).then(
-                            (value) {
-                              if (value.isNotEmpty) {
-                                Get.snackbar("Result", value);
-                              }
-                            },
-                          );
-                        } else {
-                          Get.snackbar(
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white,
-                              "Error",
-                              "Please Type Valid Email");
-                        }
+                        forgotMyPasswordController.sendEmail(emailController.text).then(
+                          (value) {
+                            if (value.isNotEmpty) {
+                              Get.snackbar(
+                                backgroundColor: Colors.red,
+                                  colorText: Colors.white,
+                                  "Result", value);
+                            }
+                          },
+                        );
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -208,7 +193,7 @@ class SignUpScreenState extends State<SignUpScreen>
                         color: Colors.grey,
                       ),
                       child: Text(
-                        signUpController.sendButtonText.value,
+                        forgotMyPasswordController.sendButtonText.value,
                         style: const TextStyle(color: Colors.black),
                       ),
                     ),
@@ -220,14 +205,14 @@ class SignUpScreenState extends State<SignUpScreen>
   }
 
   Widget _buildSignUpButton(double screenWidth) {
-    return GetBuilder<SignUpController>(
+    return GetBuilder<ForgotMyPasswordController>(
       builder: (controller) => Center(
         child: ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               customDialog();
               controller
-                  .registerUser(usernameController.text, emailController.text,
+                  .changePasswordUser(emailController.text,
                       emailCodesController.text, passwordController.text)
                   .then(
                 (value) {
@@ -243,30 +228,11 @@ class SignUpScreenState extends State<SignUpScreen>
             }
           },
           child: const Text(
-            'Sign Up',
+            'RESET',
             style: TextStyle(color: Colors.black),
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildSignInText() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          'Already Registered?',
-          style: TextStyle(color: Colors.white),
-        ),
-        GestureDetector(
-          onTap: () => Get.offAll(const SignInScreen()),
-          child: const Text(
-            '  Sign In',
-            style: TextStyle(color: AppColor.themeColor),
-          ),
-        ),
-      ],
     );
   }
 

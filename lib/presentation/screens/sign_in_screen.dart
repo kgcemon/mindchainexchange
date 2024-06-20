@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mindchain_exchange/presentation/screens/forget_my_password.dart';
 import 'package:mindchain_exchange/presentation/screens/home_screen.dart';
 import 'package:mindchain_exchange/presentation/screens/sign_up_screen.dart';
 import 'package:mindchain_exchange/presentation/utility/app_colors.dart';
@@ -79,9 +80,12 @@ class SignInScreenState extends State<SignInScreen>
                         const SizedBox(height: 32),
                         _buildSignUpButton(Get.width),
                         const SizedBox(height: 16),
-                        const Text(
-                          "I Forgot My Password",
-                          style: TextStyle(color: AppColor.themeColor),
+                        InkWell(
+                          onTap: () => Get.to(()=>const ForgotMyPassword()),
+                          child: const Text(
+                            "I Forgot My Password",
+                            style: TextStyle(color: AppColor.themeColor),
+                          ),
                         ),
                         const SizedBox(
                           height: 10,

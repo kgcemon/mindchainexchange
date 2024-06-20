@@ -13,6 +13,8 @@ class MindChain extends StatelessWidget {
       initialBinding: ControllerBinder(),
       home: const SplashScreen(),
       theme: ThemeData(
+          appBarTheme:
+              const AppBarTheme(iconTheme: IconThemeData(color: Colors.white)),
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: Colors.transparent,
