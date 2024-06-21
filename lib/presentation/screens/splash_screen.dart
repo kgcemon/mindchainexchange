@@ -3,6 +3,7 @@ import 'package:mindchain_exchange/presentation/screens/welcome_screen.dart';
 import 'package:mindchain_exchange/presentation/widgets/app_logo.dart';
 import '../controllers/user_auth_controller.dart';
 import 'home_screen.dart';
+import 'main_nav_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
+                builder: (context) => const MainNavScreen(),
               ),
               (route) => false);
         } else {

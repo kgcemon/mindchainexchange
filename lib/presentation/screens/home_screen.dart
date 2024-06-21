@@ -1,30 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mindchain_exchange/presentation/controllers/home_screen_controller.dart';
-import '../../data/model/market_info_model.dart';
-import '../widgets/crypto_tile_widget.dart';
+import '../widgets/costom_cryptoList.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Initialize the controller
     final HomeScreenController controller = Get.put(HomeScreenController());
 
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         drawer: const Drawer(),
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: const Text('Crypto Market'),
-          actions: const [
-            CircleAvatar(
-              backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
-            ),
-          ],
-        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -32,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               const MainWallet(),
               const SizedBox(height: 20),
-              const _ActionButtons(),
+              const ActionButtons(),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -127,8 +116,8 @@ class MainWallet extends StatelessWidget {
   }
 }
 
-class _ActionButtons extends StatelessWidget {
-  const _ActionButtons({super.key});
+class ActionButtons extends StatelessWidget {
+  const ActionButtons({super.key});
   @override
   Widget build(BuildContext context) {
     return const FittedBox(
@@ -186,32 +175,4 @@ class ActionButton extends StatelessWidget {
   }
 }
 
-class CryptoList extends StatelessWidget {
-  final List<MarketInfoModel> cryptos;
-  final bool Function(MarketInfoModel) filter;
-  final Color color;
 
-  const CryptoList({
-    required this.cryptos,
-    required this.filter,
-    required this.color,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final filteredCryptos = cryptos.where(filter).toList();
-    return ListView(
-      children: filteredCryptos.map((crypto) {
-        return CryptoTile(
-          name: crypto.name,
-          price: crypto.newPrice.toStringAsFixed(2),
-          change: '${crypto.change.toStringAsFixed(2)}%',
-          color: color,
-          volume: crypto.volume.toStringAsFixed(2),
-          img: crypto.icon,
-        );
-      }).toList(),
-    );
-  }
-}
