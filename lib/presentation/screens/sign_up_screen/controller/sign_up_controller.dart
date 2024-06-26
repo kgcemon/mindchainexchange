@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:mindchain_exchange/data/network_caller.dart';
-import 'package:mindchain_exchange/data/utility/urls.dart';
+import 'package:mindchain_exchange/network_caller/controller/network_caller.dart';
+
+import '../../../../network_caller/utility/urls.dart';
 
 class SignUpController extends GetxController {
   bool _inProgress = false;

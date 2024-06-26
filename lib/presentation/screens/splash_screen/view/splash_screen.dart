@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mindchain_exchange/presentation/screens/welcome_screen.dart';
+import 'package:mindchain_exchange/presentation/screens/splash_screen/view/welcome_screen.dart';
 import 'package:mindchain_exchange/presentation/widgets/app_logo.dart';
-import '../controllers/user_auth_controller.dart';
-import 'home_screen.dart';
-import 'main_nav_screen.dart';
+import '../../../../user_auth_controller.dart';
+import '../../home_screen/view/home_screen.dart';
+import '../../main_nav_screen/view/main_nav_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

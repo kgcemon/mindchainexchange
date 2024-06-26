@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:mindchain_exchange/data/model/network_response.dart';
-import 'package:mindchain_exchange/data/network_caller.dart';
-import 'package:mindchain_exchange/data/utility/urls.dart';
-import 'package:mindchain_exchange/presentation/controllers/user_auth_controller.dart';
+import 'package:mindchain_exchange/network_caller/model/network_response.dart';
+import 'package:mindchain_exchange/network_caller/controller/network_caller.dart';
+import 'package:mindchain_exchange/user_auth_controller.dart';
+import '../../../../network_caller/utility/urls.dart';
 
 class SingInController extends GetxController {
   String _errorMessage = '';
@@ -19,8 +18,10 @@ class SingInController extends GetxController {
       if (response.responseCode == 200) {
         print(username);
         if (response.responseData['status'] == 1) {
-          UserAuthController.saveUserToken(
+         await UserAuthController.saveUserToken(
               response.responseData['data']['TOKEN']);
+         await UserAuthController.saveUserId(
+              response.responseData['data']['ID']);
           return true;
         } else if (response.responseData['status'] == 0) {
           _errorMessage = response.responseData['data'];

@@ -2,21 +2,25 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart' as getx;
 import 'package:http/http.dart';
-import 'package:mindchain_exchange/presentation/controllers/user_auth_controller.dart';
-import 'package:mindchain_exchange/presentation/screens/sign_in_screen.dart';
-import 'model/network_response.dart';
+import 'package:mindchain_exchange/user_auth_controller.dart';
+import 'package:mindchain_exchange/presentation/screens/sign_in_screen/view/sign_in_screen.dart';
+import '../model/network_response.dart';
 
 class NetworkCaller {
   static Future<NetworkResponse> getRequest(
       {required String url, bool fromAuth = false}) async {
+    String? token = await UserAuthController.getUserToken();
+    String? id = await UserAuthController.getUserId();
     try {
       log(url);
       log(UserAuthController.accessToken);
+      log(id);
       final Response response = await get(
         Uri.parse(url),
         headers: {
           'accept': 'application/json',
-          'token': UserAuthController.accessToken
+          'token': token,
+          'id': id,
         },
       );
       log(response.statusCode.toString());
@@ -50,13 +54,16 @@ class NetworkCaller {
 
   static Future<NetworkResponse> postRequest(
       {required String url, var body}) async {
+    String? token = await UserAuthController.getUserToken();
+    String? id = await UserAuthController.getUserId();
     try {
       log(url);
       log(UserAuthController.accessToken);
       final Response response = await post(Uri.parse(url),
           headers: {
             'accept': 'application/json',
-            'token': UserAuthController.accessToken
+            'token': token,
+            'id': id,
           },
           body: body);
       log(response.statusCode.toString());

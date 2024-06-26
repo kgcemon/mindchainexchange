@@ -7,5 +7,6 @@ class Urls {
   static String emailCodeUrls = '$_baseUrl/Login/emailcode';
   static String forgetPassword = '$_baseUrl/Login/confirmcode';
   static String forgetPasswordCode = '$_baseUrl/Login/forgotcode';
+  static String walletUrls = '$_baseUrl/User/wallet"';
 
 }

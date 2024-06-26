@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mindchain_exchange/controller_binder.dart';
-import 'package:mindchain_exchange/presentation/screens/splash_screen.dart';
+import 'package:mindchain_exchange/presentation/screens/splash_screen/view/splash_screen.dart';
 import 'package:mindchain_exchange/presentation/utility/app_colors.dart';
 
 class MindChain extends StatelessWidget {

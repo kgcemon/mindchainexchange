@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:mindchain_exchange/data/network_caller.dart';
-import 'package:mindchain_exchange/data/utility/urls.dart';
+import 'package:mindchain_exchange/network_caller/controller/network_caller.dart';
+
+import '../../../../network_caller/utility/urls.dart';
+
 
 class ForgotMyPasswordController extends GetxController {
   bool _inProgress = false;

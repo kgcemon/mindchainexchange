@@ -1,20 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import '../../data/model/market_info_model.dart';
+import '../model/market_info_model.dart';
 import 'package:http/http.dart' as http;
 
 class HomeScreenController extends GetxController {
-  // Observable list to store the fetched market information
   var marketInfoList = <MarketInfoModel>[].obs;
-
-  // Timer variable to periodically fetch the data
   Timer? _timer;
 
   @override
   void onInit() {
     super.onInit();
-    // Start the periodic fetching when the controller is initialized
     startFetching();
   }
 
@@ -47,7 +44,10 @@ class HomeScreenController extends GetxController {
         throw Exception('Failed to load cryptos');
       }
     } catch (e) {
-      print('Error fetching cryptos: $e');
+      if (kDebugMode) {
+        print('Error fetching cryptos: $e');
+      }
     }
   }
+
 }

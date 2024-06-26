@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../data/model/market_info_model.dart';
+import '../screens/home_screen/model/market_info_model.dart';
 import 'crypto_tile_widget.dart';
 
 class CryptoList extends StatelessWidget {

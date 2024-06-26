@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mindchain_exchange/presentation/screens/forget_my_password.dart';
-import 'package:mindchain_exchange/presentation/screens/home_screen.dart';
-import 'package:mindchain_exchange/presentation/screens/sign_up_screen.dart';
+import 'package:mindchain_exchange/presentation/screens/forgot_my_password/view/forget_my_password.dart';
+import 'package:mindchain_exchange/presentation/screens/home_screen/view/home_screen.dart';
+import 'package:mindchain_exchange/presentation/screens/main_nav_screen/view/main_nav_screen.dart';
+import 'package:mindchain_exchange/presentation/screens/sign_up_screen/view/sign_up_screen.dart';
 import 'package:mindchain_exchange/presentation/utility/app_colors.dart';
 import 'package:mindchain_exchange/presentation/widgets/costom_dialoge.dart';
 import 'package:mindchain_exchange/presentation/widgets/instruction_text.dart';
 import 'package:mindchain_exchange/presentation/widgets/login_signup_header.dart';
 
-import '../controllers/sign_in_controller.dart';
+import '../controller/sign_in_controller.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -143,7 +144,7 @@ class SignInScreenState extends State<SignInScreen>
               (value) {
                 Get.back();
                 if (value == true) {
-                  Get.offAll(() => const HomeScreen());
+                  Get.offAll(() => const MainNavScreen());
                 } else {
                   Get.snackbar(
                       backgroundColor: Colors.red,

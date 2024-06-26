@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mindchain_exchange/presentation/screens/sign_in_screen.dart';
-import 'package:mindchain_exchange/presentation/screens/sign_up_screen.dart';
+import 'package:mindchain_exchange/presentation/screens/sign_in_screen/view/sign_in_screen.dart';
+import 'package:mindchain_exchange/presentation/screens/sign_up_screen/view/sign_up_screen.dart';
 import 'package:mindchain_exchange/presentation/utility/app_colors.dart';
 import 'package:mindchain_exchange/presentation/utility/assets_path.dart';
 import 'package:mindchain_exchange/presentation/widgets/app_logo.dart';
